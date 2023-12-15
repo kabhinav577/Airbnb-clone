@@ -8,9 +8,11 @@ const Logo = () => {
     <Image
       src="/images/logo.png"
       alt="Logo"
-      height="100"
-      width="100"
-      className="hidden md:block cursor-pointer"
+      height={100}
+      width={100}
+      priority={true}
+      loading="eager"
+      className="logo hidden md:block cursor-pointer"
     />
   );
 };
