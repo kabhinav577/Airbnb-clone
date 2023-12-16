@@ -2,9 +2,12 @@ import type { Metadata } from 'next';
 import { Nunito } from 'next/font/google';
 import './globals.css';
 import Navbar from './components/navbar/Navbar';
-import RegisterModal from './components/modals/RegisterModal';
 import ToasterProvider from './providers/ToasterProvider';
+
+import RegisterModal from './components/modals/RegisterModal';
 import LoginModal from './components/modals/LoginModal';
+import RentModal from './components/modals/RentModal';
+
 import getCurrentUser from './actions/getCurrentUser';
 
 export const metadata: Metadata = {
@@ -28,6 +31,7 @@ export default async function RootLayout({
         <ToasterProvider />
         <LoginModal />
         <RegisterModal />
+        <RentModal />
         <Navbar currentUser={currentUser} />
         {children}
       </body>
