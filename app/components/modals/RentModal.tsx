@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
 import useRentModal from '@/app/hooks/useRentModal';
 import { categories } from '../navbar/Categories';
@@ -9,6 +9,7 @@ import { categories } from '../navbar/Categories';
 import Modal from './Modal';
 import Heading from '../Heading';
 import CategoryInput from '../inputs/CategoryInput';
+import CountrySelect from '../inputs/CountrySelect';
 
 enum STEPS {
   CATEGORY = 0,
@@ -31,7 +32,29 @@ const RentModal = () => {
     watch,
     formState: { errors },
     reset,
-  } = useForm();
+  } = useForm<FieldValues>({
+    defaultValues: {
+      category: '',
+      location: null,
+      guestCount: 1,
+      roomCount: 1,
+      bathroomCount: 1,
+      imageSrc: '',
+      price: 1,
+      title: '',
+      description: '',
+    },
+  });
+
+  const category = watch('category');
+
+  const setCustomValue = (id: string, value: any) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
 
   const onBack = () => {
     setStep((value) => value - 1);
@@ -67,8 +90,8 @@ const RentModal = () => {
         {categories.map((item) => (
           <div className="col-span-1" key={item.label}>
             <CategoryInput
-              onClick={() => {}}
-              selected={false}
+              onClick={(category) => setCustomValue('category', category)}
+              selected={category === item.label}
               label={item.label}
               icon={item.icon}
             />
@@ -77,12 +100,25 @@ const RentModal = () => {
       </div>
     </div>
   );
+
+  if (step === STEPS.LOCATION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Where is your place loacted?"
+          subtitle="Help guests find you!"
+        />
+        <CountrySelect />
+      </div>
+    );
+  }
+
   return (
     <Modal
       isOpen={rentModal.isOpen}
       title="Airbnb your home!"
       onClose={rentModal.onClose}
-      onSubmit={rentModal.onClose}
+      onSubmit={onNext}
       actionLabel={actionLabel}
       secondaryActionLabel={secondaryActionLabel}
       body={bodyContent}
