@@ -22,9 +22,11 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-  listing: SafeListing;
-  currentUser?: SafeUser | null;
   reservations?: SafeReservation[];
+  listing: SafeListing & {
+    user: SafeUser;
+  };
+  currentUser?: SafeUser | null;
 }
 
 const ListingClient: React.FC<ListingClientProps> = ({
@@ -71,8 +73,7 @@ const ListingClient: React.FC<ListingClientProps> = ({
       .then(() => {
         toast.success('Listing reserved!');
         setDateRange(initialDateRange);
-        // router.push('/trips');
-        router.refresh();
+        router.push('/trips');
       })
       .catch(() => {
         toast.error('Something went wrong!');

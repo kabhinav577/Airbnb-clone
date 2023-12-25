@@ -1,4 +1,5 @@
 import prisma from '@/app/libs/prismadb';
+import { SafeReservation } from '../types';
 
 interface IParams {
   listingId?: string;
