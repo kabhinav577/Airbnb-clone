@@ -1,4 +1,5 @@
 import prisma from '@/app/libs/prismadb';
+import { SafeListing } from '../types';
 
 interface IParams {
   listingId?: string;
@@ -21,7 +22,7 @@ export default async function getListingById(params: IParams) {
       return null;
     }
 
-    return {
+    const safeListing: any = {
       ...listing,
       createdAt: listing.createdAt.toISOString(),
       user: {
@@ -31,6 +32,8 @@ export default async function getListingById(params: IParams) {
         emailVerfied: listing.user.emailVerified?.toISOString() || null,
       },
     };
+
+    return safeListing;
   } catch (error: any) {
     throw new Error(error);
   }
