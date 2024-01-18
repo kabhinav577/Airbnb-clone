@@ -10,10 +10,12 @@ import RentModal from './components/modals/RentModal';
 
 import getCurrentUser from './actions/getCurrentUser';
 import SearchModal from './components/modals/SearchModal';
+import Footer from './components/Footer';
 
 export const metadata: Metadata = {
-  title: 'Airbnb',
-  description: 'Airbnb clone',
+  title: 'Airbnb | Holiday rentals, cabins, beach houses & more',
+  description:
+    'Airbnb | Holiday rentals, cabins, beach houses & more - clone by Krishna kant Singh',
 };
 
 const font = Nunito({
@@ -36,6 +38,7 @@ export default async function RootLayout({
         <SearchModal />
         <Navbar currentUser={currentUser} />
         <div className="pb-20 pt-28">{children}</div>
+        <Footer />
       </body>
     </html>
   );
